@@ -1,0 +1,39 @@
+SELECT *
+FROM fortune_companies;
+
+--Which Fortune 500 company pays the most?
+SELECT company_name, revenue,
+CASE WHEN revenue >500.01 THEN "Pay greater than 500,001"
+WHEN revenue >=500 THEN "Pay greater than 500"
+WHEN revenue >=400 THEN "Pay greater than 400"
+WHEN revenue >=300 THEN "Pay greater than 300"
+ELSE "Lowest paid"
+END AS Pay_rate
+FROM fortune_companies
+ORDER BY revenue DESC;
+
+--Which companies offer more than 6 weeks of maternity leave?
+SELECT company_name, maternity_leave_weeks
+FROM fortune_companies
+GROUP BY maternity_leave_weeks
+HAVING maternity_leave_weeks>6
+ORDER BY maternity_leave_weeks asc;
+
+--Is there a coorelation between paid time off days and average employee tenure?
+SELECT company_name, paid_time_off_days, avg_employee_tenure
+FROM fortune_companies
+WHERE paid_time_off_days >=20
+AND avg_employee_tenure >=5.0;
+
+SELECT company_name, paid_time_off_days, avg_employee_tenure
+FROM fortune_companies
+WHERE paid_time_off_days < 20
+AND avg_employee_tenure < 5;
+
+SELECT company_name, paid_time_off_days, avg_employee_tenure
+FROM fortune_companies
+ORDER BY paid_time_off_days DESC, avg_employee_tenure desc; 
+
+--Which company has the highest amount of employees?
+SELECT company_name, MAX(employees), industry
+FROM fortune_companies;
